@@ -1,0 +1,16 @@
+{% extends 'RITCSE_codeWars/base.html' %}
+
+{% block title %}User Registration{% endblock %}
+
+{% block code %}
+    <b>Enter new user's details<br><br></b>
+<form action="{% url 'Registration' %}" method="post" name = "userform" >
+
+    {% csrf_token %}
+    &nbsp;&nbsp;<input type="text" name="username" value="Enter username" aria-selected="true"/><br><br>
+    &nbsp;&nbsp;<input type="password" name="password", value="Password"/><br><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="submit" name="submit", value="Save"/>
+</form>
+
+{% endblock %}
