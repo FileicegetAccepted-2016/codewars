@@ -5,8 +5,8 @@ from django.utils.timezone import datetime
 
 class Contest(models.Model):
     name = models.CharField(max_length=200)
-    contest_start_date = models.DateField()
-    contest_end_date = models.DateField()
+    contest_start_date = models.DateTimeField
+    contest_end_date = models.DateTimeField()
 
     def __str__(self):
         return self.name
@@ -22,8 +22,10 @@ class Question(models.Model):
 
 
 class Submission(models.Model):
+    contest = models.ForeignKey(Contest)
     user = models.ForeignKey(User)
     question_code = models.CharField(max_length=20)
+    submission_id = models.BigIntegerField()
     source = models.TextField()
     result = models.CharField(max_length=20)
     complete_pass = models.BooleanField(default=False)
