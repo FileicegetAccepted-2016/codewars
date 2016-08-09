@@ -1,16 +1,42 @@
 {% extends 'RITCSE_codeWars/base.html' %}
 
-{% block title %}User Registration{% endblock %}
 
 {% block code %}
-    <b>Enter new user's details<br><br></b>
-<form action="{% url 'Registration' %}" method="post" name = "userform" >
+  <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-7">
+                <div class="panel  ">
+                    <div class="panel body">
+                        <div class="panel-heading panel panel-primary">
+                            <h3 class="panel-title">Create new account</h3>
+                        </div>
 
-    {% csrf_token %}
-    &nbsp;&nbsp;<input type="text" name="username" value="Enter username" aria-selected="true"/><br><br>
-    &nbsp;&nbsp;<input type="password" name="password", value="Password"/><br><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <input type="submit" name="submit", value="Save"/>
-</form>
+                            <form class="form-horizontal" role="form" action="{% url 'Registration' %}" method="post" name = "userform" >
+                            {% csrf_token %}
+                                Username : <input type="text" name="username"  aria-selected="true"/><br><br>
+                                Password  : <input type="password" name="password", /><br>
+                                <div class="form-group">
+                                    <div class="col-lg-offset-2  col-lg-10  ">
+                                        <br>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div>
+
 
 {% endblock %}
+
+
+
+
+
+
+  <b>Enter new user's details<br><br></b>
+
+
+

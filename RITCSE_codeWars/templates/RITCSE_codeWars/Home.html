@@ -2,11 +2,42 @@
 {% extends 'RITCSE_codeWars/base.html' %}
 
 {% block code %}
-    <h2><strong>You are at home page of Codewars!</strong></h2><br>
-    <form action="{% url 'YourSubmissions' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <b style="font-size: medium">Select file to upload</b>
-        <input type="file" name="myfile" />
-        <input type="submit" name="submit" value="Upload" />
-    </form>
+
+   <div class="container-fluid">
+
+            <div class="col-sm-12 col-md-7">
+                <div class="panel panel-primary">
+                    <div class="panel-heading ">
+                            <h3 class="panel-title"><c style="font-family: cursive">
+                                You are at home page of Codewars</c></h3>
+                    </div>
+                    <div class="panel body col-sm-12 ">
+                            <form  action="{% url 'YourSubmissions' %}" method="post" name = "userform"
+                            enctype="multipart/form-data">
+                                {% csrf_token %}
+                                     <label class="btn btn-default btn-file">
+                                        Select file to upload: <input type="file" style="display: none;">
+                                     </label>
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-1  col-lg-10  ">
+                                            <br>
+                                            <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                                        </div>
+                                </div>
+                            </form>
+
+                    </div>
+                </div>
+            </div>
+
+  </div>
+
 {% endblock %}
+
+
+
+
+ <form action="{% url 'YourSubmissions' %}" method="post" >
+        {% csrf_token %}
+
+    </form>
