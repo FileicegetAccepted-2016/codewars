@@ -10,19 +10,19 @@
             <label class="col-md-4"></label>
             <label class="col-md-4">Your Submissions</label>
                 <table class="table table-hover">
-                    <thead>
                         <tr>
                             <th>Submission id</th>
                             <th>User</th>
                             <th>Question code</th>
                             <th>Result</th>
                         </tr>
-                    </thead>
                     {% for row_item in submission_list %}
-                        <tr>{{ row_item.submission_id }}</tr>
-                        <tr>{{ row_item.user.username }}</tr>
-                        <tr>{{ row_item.question_code }}</tr>
-                        <tr>{{ row_item.result }}</tr>
+                       <tr>
+                            <td>{{ row_item.submission_id }}</td>
+                            <td>{{ row_item.user.username }}</td>
+                            <td>{{ row_item.question_code }}</td>
+                            <td>{{ row_item.result }}</td>
+                        </tr>
                     {% endfor %}
                 </table>
             <label class="col-md-4"></label>

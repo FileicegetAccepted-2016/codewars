@@ -2,6 +2,11 @@
 {% block Login %}Hidden{% endblock %}
 {% block title %}Login{% endblock %}
 {% block code %}
+    {% if errormessage %}
+        <div class="alert alert-danger">
+          <strong>Login Failed</strong> You have probably messed up your password!!
+        </div>
+    {% endif %}
 <div class="container-fluid">
             <div class="col-md-4"></div>
 

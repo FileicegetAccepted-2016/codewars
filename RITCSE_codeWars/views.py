@@ -24,7 +24,9 @@ def index(request):
         })
 
     return render(request, 'RITCSE_codeWars/ContestList.html', {
-        "contest_list": contests
+        "contest_list": contests,
+        "user": request.user.is_authenticated()
+
     })
 
 
