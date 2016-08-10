@@ -15,8 +15,12 @@
 
                             <form class="form-horizontal" role="form" action="{% url 'Registration' %}" method="post" name = "userform" >
                             {% csrf_token %}
+
                                 Username : <input type="text" name="username"  aria-selected="true"/><br><br>
                                 Password  : <input type="password" name="password", /><br>
+                                First Name :<input type="text" name="firstname"  aria-selected="true"/><br>
+                                Last Name : <input type="text" name="lastname"  aria-selected="true"/><br>
+                                Email : <input type="email" name="email"  aria-selected="true"/><br>
                                 <div class="form-group">
                                     <div class="col-lg-offset-2  col-lg-10  ">
                                         <br>
@@ -35,10 +39,6 @@
 
 
 
-
-
-
-  <b>Enter new user's details<br><br></b>
 
 
 
