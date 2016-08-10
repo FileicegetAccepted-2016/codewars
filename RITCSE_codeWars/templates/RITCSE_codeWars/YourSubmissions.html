@@ -3,7 +3,30 @@
 {% block YourSubmissions %}active{% endblock %}
 
 {% block code %}
-    <h4>You are at your submissions page of Codewars!</h4>
+    <h4>You are at your submissions page of Codewars!</h4><br><br><br>
+
+    <div class="container-fluid">
+            <div class="col-md-12 table-responsive">
+            <label class="col-md-4"></label>
+            <label class="col-md-4">Your Submissions</label>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Submission id</th>
+                            <th>User</th>
+                            <th>Question code</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    {% for row_item in submission_list %}
+                        <tr>{{ row_item.submission_id }}</tr>
+                        <tr>{{ row_item.user.username }}</tr>
+                        <tr>{{ row_item.question_code }}</tr>
+                        <tr>{{ row_item.result }}</tr>
+                    {% endfor %}
+                </table>
+            <label class="col-md-4"></label>
+            </div>
 
 
 {% endblock %}
