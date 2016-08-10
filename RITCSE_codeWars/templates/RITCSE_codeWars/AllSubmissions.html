@@ -42,18 +42,20 @@
                  <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Rank</th>
+
                             <th>User</th>
                             <th>Question Solved</th>
                             <th>Last Submitted</th>
                         </tr>
                     </thead>
+                    <tbody>
                     {% for row_item in rank_list %}
                         <tr>{{ forloop.counter }}</tr>
                         <tr>{{ row_item.user.username }}</tr>
                         <tr>{{ row_item.question_solved }}</tr>
                         <tr>{{ row_item.last_submitted }}</tr>
                     {% endfor %}
+                    </tbody>
                 </table>
              <label class="col-md-4"></label>
              </div>
