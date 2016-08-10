@@ -5,7 +5,7 @@ from django.utils.timezone import datetime
 
 class Contest(models.Model):
     name = models.CharField(max_length=200)
-    contest_start_date = models.DateTimeField
+    contest_start_date = models.DateTimeField()
     contest_end_date = models.DateTimeField()
 
     def __str__(self):
@@ -19,7 +19,7 @@ class Question(models.Model):
     question_text = models.TextField()
 
     def __str__(self):
-        return self.user + ' - ' + self.question_code
+        return self.question_name
 
 
 class Submission(models.Model):

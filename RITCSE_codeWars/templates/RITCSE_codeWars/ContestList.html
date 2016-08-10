@@ -9,26 +9,17 @@
     <div class="panel panel-default">
         <div class="panel-heading">All Competitions available</div>
         <div class="panel-body">
-            Panel content
-        </div>
-    </div>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Panel title</h3>
-  </div>
-  <div class="panel-body">
-    Panel content
-  </div>
-</div>
-         <div class="list-group">
-         <div class="list-header">
-             <div class=""
-         </div>
+            <div class="list-group">
              {% for contestitems in contest_list %}
-              <a href="{% url 'Questions' contestitems.id  %}" class="list-group-item">{{ contestitems.name }}</a>
+               <a href="{% url 'Questions' contestitems.id  %}" class="list-group-item">
+                 {{ contestitems.name }}</a>
              {% endfor %}
          </div>
     </div>
+        </div>
+    </div>
+
+
+
 {% endblock %}
 
