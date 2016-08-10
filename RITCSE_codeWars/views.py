@@ -38,7 +38,7 @@ class UserFormView(View):
 
 
 def login_user(request):
-    return render('RITCSE_codeWars/Login.html')
+    return render(request,'RITCSE_codeWars/Login.html')
 
 
 def authenticate_user(request):
