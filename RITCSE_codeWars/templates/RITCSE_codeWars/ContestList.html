@@ -1,0 +1,34 @@
+{% extends 'RITCSE_codeWars/base.html' %}
+{% block title %}Acive Contests{% endblock %}
+
+
+{% block code %}
+    <br><br><br>
+    <div class="container-fluid">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">All Competitions available</div>
+        <div class="panel-body">
+            Panel content
+        </div>
+    </div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Panel title</h3>
+  </div>
+  <div class="panel-body">
+    Panel content
+  </div>
+</div>
+         <div class="list-group">
+         <div class="list-header">
+             <div class=""
+         </div>
+             {% for contestitems in contest_list %}
+              <a href="{% url 'Questions' contestitems.id  %}" class="list-group-item">{{ contestitems.name }}</a>
+             {% endfor %}
+         </div>
+    </div>
+{% endblock %}
+

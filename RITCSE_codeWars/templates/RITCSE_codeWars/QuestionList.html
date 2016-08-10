@@ -1,0 +1,14 @@
+{% extends 'RITCSE_codeWars/base.html' %}
+{% block title %}{{ contest }}{% endblock %}
+
+
+{% block code %}
+    <br><br><br>
+    <div class="container-fluid">
+         <div class="list-group">
+             {% for question in questions %}
+              <a href="{% url 'Problem' question.id %}" class="list-group-item">{{ contestitems.name }}</a>
+             {% endfor %}
+         </div>
+    </div>
+{% endblock %}
