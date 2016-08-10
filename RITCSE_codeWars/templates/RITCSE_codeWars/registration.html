@@ -4,34 +4,74 @@
 
 
 {% block code %}
-  <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12 col-md-7">
-                <div class="panel  ">
-                    <div class="panel body">
-                        <div class="panel-heading panel panel-primary">
-                            <h3 class="panel-title">Create new account</h3>
-                        </div>
+ <div class="container-fluid">
+            <div class="col-md-4"></div>
 
-                            <form class="form-horizontal" role="form" action="{% url 'Registration' %}" method="post" name = "userform" >
-                            {% csrf_token %}
 
-                                Username : <input type="text" name="username"  aria-selected="true"/><br><br>
-                                Password  : <input type="password" name="password", /><br>
-                                First Name :<input type="text" name="firstname"  aria-selected="true"/><br>
-                                Last Name : <input type="text" name="lastname"  aria-selected="true"/><br>
-                                Email : <input type="email" name="email"  aria-selected="true"/><br>
-                                <div class="form-group">
-                                    <div class="col-lg-offset-2  col-lg-10  ">
-                                        <br>
-                                        <button type="submit" class="btn btn-success">Submit</button>
-                                    </div>
+            <div class="col-md-4 ">
+                <div class="panel panel-info">
+                    <div class="panel-heading ">
+                        <div align="center">
+                            <label class="panel-title " style="font-family: cursive; text-align:center ">
+                                Login</label>
+                            </div>
+                    </div>
+                    <div class="panel body col-sm-12  "><br><br>
+                            <form  action="{% url 'AuthenticateUser' %}" method="post" name = "userform">
+                                {% csrf_token %}
+                                    <div align="center">
+                                     <label class="input-group">
+                                         <input type="text" class="from-control"  id="firstname" name="firstname"
+                                                aria-label="Enter your Firstname" placeholder="First Name">
+                                     </label>
+                                        </div>
+                                    <div align="center">
+                                     <label class="input-group">
+                                         <input type="text" class="from-control"  id="lastname" name="lastname"
+                                                aria-label="Enter your Lastname" placeholder="Last Name">
+                                     </label>
+                                        </div>
+
+                                    <div align="center">
+                                     <label class="input-group">
+                                         <input type="text" class="from-control"  id="username" name="username"
+                                                aria-label="Enter your username" placeholder="Username">
+                                     </label>
+                                        </div>
+
+                                <div align="center">
+                                     <label class="input-group">
+                                         <input type="password" class="from-control"  id="password" name="password"
+                                                aria-label="Enter your password" placeholder="Password">
+                                     </label>
+                                        </div>
+
+                                <div align="center">
+                                     <label class="input-group">
+                                         <input type="password" class="from-control"  id="conformpassword" name="conformpassword"
+                                                aria-label="Conform password" placeholder="Conform Password">
+                                     </label>
+                                        </div>
+
+                                <div align="center">
+                                     <label class="input-group">
+                                         <input type="email" class="from-control"  id="email" name="email"
+                                                aria-label="Enter your email" placeholder="Email">
+                                     </label>
+                                        </div>
+                                    <div class="form-group">
+                                        <div align="center" >
+                                            <br>
+                                            <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                                        </div>
                                 </div>
                             </form>
+
                     </div>
                 </div>
             </div>
-        </div>
+             <div class="col-md-4"></div>
+
   </div>
 
 
