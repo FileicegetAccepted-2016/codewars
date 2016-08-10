@@ -30,33 +30,34 @@
 
 
             <ul class="nav navbar-nav navbar-left">
-                <li class="active">
+                <li class="{% block Home %}{% endblock %}">
                     <a href={% url "Index" %}>
                          <span class="glyphicon glyphicon-home" aria-hidden="true" ></span>&nbsp; Home
                     </a>
                 </li>
 
-                <li class="">
+                <li class="{% block YourSubmissions %}{% endblock %}">
                     <a href={% url "YourSubmissions" %}>Your Submissions</a>
                 </li>
 
-                <li class="">
+                <li class="{% block AllSubmissions %}{% endblock %}">
                     <a href={% url "AllSubmissions" %}>All Submissions</a>
                 </li>
             </ul>
 
              <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                    <a href=#>
-                         <span class="glyphicon glyphicon-off" aria-hidden="true" ></span>&nbsp; Logout
-                    </a>
-                </li>
 
-                 <li class="">
+                 <li class="{% block Registration %}{% endblock %}">
                     <a href={% url "Registration" %}>
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; New User
                     </a>
                 </li>
+                <li class="{% block Login %}{% endblock %}">
+                    <a href="{% url 'Login' %}">
+                         <span class="glyphicon glyphicon-off" aria-hidden="true" ></span>&nbsp; Login
+                    </a>
+                </li>
+
             </ul>
 
         </div>
