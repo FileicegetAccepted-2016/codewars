@@ -136,16 +136,15 @@ def logout_user(request):
 
 def authenticate_user(request):
     try:
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
     except KeyError:
+        print "ker"
         return HttpResponseRedirect(reverse('Login'))
     user = authenticate(username=username, password=password)
-
     if user is None:
         return HttpResponseRedirect(reverse('Login') + '?error=true')
     login(request, user)
-    request.session.set_expiry(0)
     return HttpResponseRedirect(reverse('Index'))
 
 
@@ -157,9 +156,10 @@ def questions_list(request, contest_list_id):
     except Contest.DoesNotExist:
         return HttpResponseRedirect(reverse('Index'))
     questions = Question.objects.all().filter(contest=contest_obj)
+    print questions
     return render(request, 'RITCSE_codeWars/QuestionList.html', {
         'username': request.user.username,
-        'contest': contest_list_id,
+        'contest': contest_obj,
         'question_list': questions,
     })
 
@@ -171,7 +171,7 @@ def problem(request, question_code):
         question = Question.objects.all().filter(question_code=question_code)
     except Question.DoesNotExist:
         return HttpResponseRedirect('Index')
-    return render('RITCSE_codeWars/Home.html', {
+    return render(request, 'RITCSE_codeWars/Home.html', {
         'username': request.user.username,
         'question': question
     })
