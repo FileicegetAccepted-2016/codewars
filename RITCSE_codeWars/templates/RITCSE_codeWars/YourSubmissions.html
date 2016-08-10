@@ -1,6 +1,13 @@
 {% extends 'RITCSE_codeWars/base.html' %}
 {% block title %}Your Submissions{% endblock %}
 {% block YourSubmissions %}active{% endblock %}
+{% block logout %}
+    <li class="{% block Logout %}{% endblock %}">
+                    <a href={% url "Logout" %}>
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
+                    </a>
+    </li>
+{% endblock %}
 
 {% block code %}
     <h4>You are at your submissions page of Codewars!</h4><br><br><br>

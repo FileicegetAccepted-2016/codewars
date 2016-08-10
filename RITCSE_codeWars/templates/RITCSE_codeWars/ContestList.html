@@ -1,22 +1,31 @@
 {% extends 'RITCSE_codeWars/base.html' %}
-{% block title %}Acive Contests{% endblock %}
-
+{% block title %}Active Contests{% endblock %}
+{% block logout %}
+    <li class="{% block Logout %}{% endblock %}">
+                    <a href={% url "Logout" %}>
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
+                    </a>
+    </li>
+{% endblock %}
 
 {% block code %}
     <br><br><br>
-    <div class="container-fluid">
-
-    <div class="panel panel-default">
-        <div class="panel-heading">All Competitions available</div>
-        <div class="panel-body">
-            <div class="list-group">
-             {% for contestitems in contest_list %}
-               <a href="{% url 'Questions' contestitems.id  %}" class="list-group-item">
-                 {{ contestitems.name }}</a>
-             {% endfor %}
-         </div>
-    </div>
+    <div class="container-fluid ">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-8">
+        <div class="panel panel-default ">
+                <div class="panel-heading">All Competitions available</div>
+                <div class="panel-body">
+                    <div class="list-group">
+                     {% for contestitems in contest_list %}
+                       <a href="{% url 'Questions' contestitems.id  %}" class="list-group-item">
+                         {{ contestitems.name }}</a>
+                     {% endfor %}
+                    </div>
+                </div>
         </div>
+        </div>
+
     </div>
 
 

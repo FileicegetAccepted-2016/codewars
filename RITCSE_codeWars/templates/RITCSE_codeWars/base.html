@@ -43,11 +43,7 @@
 
              <ul class="nav navbar-nav navbar-right">
 
-                <li class="{% block Logout %}{% endblock %}">
-                    <a href={% url "Logout" %}>
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
-                    </a>
-                </li>
+                {% block logout %}{% endblock %}
 
 
 
@@ -58,5 +54,10 @@
 </nav>
 {% block code %}
 {% endblock %}
+<footer>
+    <div align="center" style="position:fixed;   bottom:0px;   height:30px;   width:100%;">
+  <i >Created by Bineeth and Sidhin.S.Thomas</i>
+        </div>
+</footer>
 </body>
 </html>

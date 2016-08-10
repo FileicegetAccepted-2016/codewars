@@ -2,48 +2,61 @@
 {% extends 'RITCSE_codeWars/base.html' %}
 {% block title %}Welcome {{ username }}{% endblock %}
 {% block Home %}active{% endblock %}
-
+{% load staticfiles %}
+ <link rel="stylesheet" type="text/css" href="{% static 'RITCSE_codeWars/table_styling.css' %}"/>
+<body>
 {% block code %}
     <div class="col-sm-6">
 
        <div class="container-fluid">
 
-                <div class="col-sm-12 col-md-7">
+                <div class="col-sm-12 ">
                     <div class="panel panel-primary">
                         <div class="panel-heading ">
                                 <h3 class="panel-title"><c style="font-family: cursive">
                                     {{ question.question_name }}</c></h3>
                         </div>
-                        <div class="panel body col-sm-12 " style="min-height: 100px">
+                        <div class="panel body col-sm-12 " style="min-height: 100px; min-width: 500px">
                                 {{ question.question_text }}
 
                         </div>
                         <form action="{% url 'VerifyResult' question_code=question.question_code %}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                         <div >
-                            <input type="file" name="source">
-
-                            <select name="Language" value="Language">
-                              <option value="none" selected = "selected">Select language</option>
-                              <option value="cpp">C++</option>
-                              <option value="c">C</option>
-                              <option value="java">Java</option>
-                              <option value="python2">Python 2.7</option>
-                              <option value="python3">Python 3</option>
-
-                            </select>
+                            <div >
+                                <i >Submit your answer</i>
+                                 <input type="file" name="source">
+                            </div>
                         </div>
+                            <div>
+                                 <div class="col-sm-3">
+                                     <br>
 
-                        <div >
-                            <br>
-                            <button type="submit" name="submit" class="btn btn-success">Submit</button>
-                         </div>
-                            </form>
+                                    <select name="Language" value="Language">
+                                      <option value="none" selected = "selected">Select language</option>
+                                      <option value="cpp">C++</option>
+                                      <option value="c">C</option>
+                                      <option value="java">Java</option>
+                                      <option value="python2">Python 2.7</option>
+                                      <option value="python3">Python 3</option>
+
+                                    </select>
+                                     </div>
+
+
+                                <div class="col-sm-2 ">
+                                    <br>
+                                    <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                                 </div>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
 
       </div>
     </div>
+
 
     <div class="col-sm-1"></div>
 
@@ -51,38 +64,37 @@
         <div class="panel-group">
             <div class="panel panel-sucess">
                 <div class="panel-heading">
-                    Submissions
                 </div>
                 <div class="panel-body">
                     <div class="container">
                       <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#">All Submissions</a></li>
-                        <li><a data-toggle="tab" href="#S">Sucessful Submissions</a></li>
+                        <li class="active"><a data-toggle="tab" href="#AllSubmission">All Submissions</a></li>
+                        <li><a data-toggle="tab" href="#Sucessful">Sucessful Submissions</a></li>
                       </ul>
                     <div class="tab-content">
-                        <div id="AllSubmission" class="tab-pane fade ">
-                            <table >
+                        <div id="AllSubmission" class="tab-pane fade in active ">
+                            <table style="width:700px" class="table table-hover">
                                 <tr>
                                     <th>User</th>
                                     <th>Status</th>
                                 </tr>
                                 {% for data in submission_list %}
                                     <tr>
-                                        <td>{{ data.username }}</td>
+                                        <td>{{ data.user.username }}</td>
                                         <td>{{ data.result }}</td>
                                     </tr>
                                 {% endfor %}
                             </table>
                         </div>
-                        <div id="Sucessful" class="tab-pane fade in active">
-                            <table >
+                        <div id="Sucessful" class="tab-pane fade ">
+                            <table style="width:700px" class="table table-hover">
                                 <tr>
                                     <th>User</th>
                                     <th>Time</th>
                                 </tr>
                                 {% for data in submission_accepted %}
                                     <tr>
-                                        <td>{{ data.username }}</td>
+                                        <td>{{ data.user.username }}</td>
                                         <td>{{ data.submission_time }}</td>
                                     </tr>
                                 {% endfor %}
@@ -95,9 +107,25 @@
         </div>
 
     </div>
+    </div>
+    </div>
 
 {% endblock %}
 
+<footer>
+    <div align="center" style="position:fixed;   bottom:0px;   height:30px;   width:100%;">
+  <i >Created by Bineeth and Sidhin.S.Thomas</i>
+        </div>
+</footer>
+
+{% block logout %}
+    <li class="{% block Logout %}{% endblock %}">
+                    <a href={% url "Logout" %}>
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
+                    </a>
+    </li>
+{% endblock %}
+</body>
 
 
 
