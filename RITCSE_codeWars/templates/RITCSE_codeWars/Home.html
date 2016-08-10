@@ -17,11 +17,27 @@
                             {{ question.question_text }}
 
                     </div>
+                    <form action="{% url 'VerifyResult' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <div >
+                        <input type="file" name="source">
+
+                        <select name="Language" value="Language">
+                          <option value="none" selected = "selected">Select language</option>
+                          <option value="cpp">C++</option>
+                          <option value="c">C</option>
+                          <option value="java">Java</option>
+                          <option value="python2">Python</option>
+
+                        </select>
+                        <input type="text" id="code"  name="code" value="{{ question.question_code }}"/>
+                    </div>
 
                     <div >
                         <br>
                         <button type="submit" name="submit" class="btn btn-success">Submit</button>
                      </div>
+                        </form>
                 </div>
             </div>
 

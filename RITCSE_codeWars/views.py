@@ -5,8 +5,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import View
+
+from RITCSE_codeWars import CodeChef
 from RITCSE_codeWars.models import Submission, Contest, Question
-from .form import UserForm
+from .form import UserForm, UploadFileForm
+
+c = CodeChef.API('buildrit', 'CSEdepartment')
+c.login()
 
 
 def index(request):
@@ -28,6 +33,7 @@ def all_submission(request):
     except KeyError:
         return HttpResponseRedirect(reverse('Index'))
     contest = Contest.objects.all().filter(pk=contest_pk)[0]
+    request.session['contest'] = contest
     request.session['contest'] = contest
     submission_list = Submission.objects.all().filter(contest=contest)
     users = set()
@@ -139,7 +145,6 @@ def authenticate_user(request):
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
     except KeyError:
-        print "ker"
         return HttpResponseRedirect(reverse('Login'))
     user = authenticate(username=username, password=password)
     if user is None:
@@ -168,10 +173,33 @@ def problem(request, question_code):
     if not request.user.is_authenticated():
         return HttpResponseRedirect(reverse('Login') + "?error=true")
     try:
-        question = Question.objects.all().filter(question_code=question_code)
+        question = Question.objects.all().filter(question_code=question_code)[0]
     except Question.DoesNotExist:
         return HttpResponseRedirect('Index')
     return render(request, 'RITCSE_codeWars/Home.html', {
         'username': request.user.username,
         'question': question
     })
+
+
+def verify_submission(request, question_code):
+
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('Login') + "?error=true")
+    try:
+        print request.POST
+        language = request.POST['Language']
+        source = request.FILES['source']
+        print source.name
+    except KeyError:
+        return HttpResponseRedirect(reverse('Problem', kwargs={'question_code': question_code}) + "?error=true")
+    submission = Submission(user=request.user)
+    submission.contest = Contest(request.session['contest'])
+    submission.question_code = question_code
+    submission.source = source
+    submission.submission_time = timezone.now()
+    submission.language = language
+    submission.submission_id = c.submit(question_code, source, language)
+    submission.result = c.check_result(submission.submission_id,question_code)
+    submission.save()
+    return HttpResponseRedirect(reverse('YourSubmissions'))
