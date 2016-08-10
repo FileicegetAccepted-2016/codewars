@@ -6,14 +6,14 @@ from django.urls import reverse
 from django.utils.datetime_safe import datetime
 from django.views.generic import View
 
-from RITCSE_codeWars.models import Submission, Contest
+from RITCSE_codeWars.models import Submission, Contest, Question
 from .form import UserForm
 
 
 def index(request):
     now = datetime.now()
     contest_list = Contest.objects.all()
-    return render(request, 'RITCSE_codeWars/Home.html', {
+    return render(request, 'RITCSE_codeWars/ContestList.html', {
         "contest_list": contest_list
     })
 
@@ -116,13 +116,13 @@ class UserFormView(View):
 
     def post(self, request):
         form = self.form_class(request.POST)
-
         if form.is_valid():
             form.save(commit=True)
+        return HttpResponseRedirect(reverse('Index'))
 
 
 def login_user(request):
-    return render(request,'RITCSE_codeWars/Login.html')
+    return render(request, 'RITCSE_codeWars/Login.html')
 
 
 def logout_user(request):
@@ -143,3 +143,31 @@ def authenticate_user(request):
     login(request, user)
     request.session.set_expiry(0)
     return HttpResponseRedirect(reverse('Index'))
+
+
+def questions_list(request, contest):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('Login') + "?error=true")
+    try:
+        contest_obj = Contest.objects.all().filter(pk=contest)
+    except Contest.DoesNotExist:
+        return HttpResponseRedirect(reverse('Index'))
+    questions = Question.objects.all().filter(contest=contest_obj)
+    return render('RITCSE_codeWars/question_list.html', {
+        'username': request.user.username,
+        'contest': contest,
+        'question_list': questions
+    })
+
+
+def problem(request, question_code):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('Login') + "?error=true")
+    try:
+        question = Question.objects.all().filter(question_code=question_code)
+    except Question.DoesNotExist:
+        return HttpResponseRedirect('Index')
+    return render('RITCSE_codeWars/Home.html', {
+        'username': request.user.username,
+        'question': question
+    })
