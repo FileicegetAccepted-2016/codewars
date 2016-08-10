@@ -153,10 +153,10 @@ def questions_list(request, contest):
     except Contest.DoesNotExist:
         return HttpResponseRedirect(reverse('Index'))
     questions = Question.objects.all().filter(contest=contest_obj)
-    return render('RITCSE_codeWars/question_list.html', {
+    return render('RITCSE_codeWars/QuestionList.html', {
         'username': request.user.username,
         'contest': contest,
-        'question_list': questions
+        'question_list': questions,
     })
 
 
