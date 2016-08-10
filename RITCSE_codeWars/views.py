@@ -3,17 +3,14 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-from django.utils.datetime_safe import datetime
-from datetime import timedelta
+from django.utils import timezone
 from django.views.generic import View
-
 from RITCSE_codeWars.models import Submission, Contest, Question
 from .form import UserForm
 
 
 def index(request):
-    now = datetime.now()
-
+    now = timezone.now()
     contest_list = Contest.objects.all()
     contests = []
     for contest in contest_list:
@@ -152,17 +149,18 @@ def authenticate_user(request):
     return HttpResponseRedirect(reverse('Index'))
 
 
-def questions_list(request, contest):
+def questions_list(request, contest_list_id):
     if not request.user.is_authenticated():
         return HttpResponseRedirect(reverse('Login') + "?error=true")
     try:
-        contest_obj = Contest.objects.all().filter(pk=contest)
+        contest_obj = Contest.objects.all().filter(pk=contest_list_id)
     except Contest.DoesNotExist:
         return HttpResponseRedirect(reverse('Index'))
     questions = Question.objects.all().filter(contest=contest_obj)
-    return render('RITCSE_codeWars/QuestionList.html', {
+    print questions
+    return render(request, 'RITCSE_codeWars/QuestionList.html', {
         'username': request.user.username,
-        'contest': contest,
+        'contest': contest_list_id,
         'question_list': questions,
     })
 
