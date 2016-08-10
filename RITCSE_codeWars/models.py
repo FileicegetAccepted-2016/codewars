@@ -19,7 +19,7 @@ class Question(models.Model):
     question_text = models.TextField()
 
     def __str__(self):
-        return self.user + ' - ' + self.question_code
+        return self.question_name
 
 
 class Submission(models.Model):

@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.utils.datetime_safe import datetime
+from datetime import timedelta
 from django.views.generic import View
 
 from RITCSE_codeWars.models import Submission, Contest, Question
@@ -12,9 +13,15 @@ from .form import UserForm
 
 def index(request):
     now = datetime.now()
+
     contest_list = Contest.objects.all()
+    contests = []
+    for contest in contest_list:
+        if contest.contest_start_date < now < contest.contest_end_date:
+            contests.append(contest)
+
     return render(request, 'RITCSE_codeWars/ContestList.html', {
-        "contest_list": contest_list
+        "contest_list": contests
     })
 
 
