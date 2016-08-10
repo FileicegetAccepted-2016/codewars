@@ -17,7 +17,7 @@
                             </div>
                     </div>
                     <div class="panel body col-sm-12  "><br><br>
-                            <form  action="{% url 'AuthenticateUser' %}" method="post" name = "userform">
+                            <form  action="{% url 'CreateUser' %}" method="post" name = "userform">
                                 {% csrf_token %}
                                     <div align="center">
                                      <label class="input-group">

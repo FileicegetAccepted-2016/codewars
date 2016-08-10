@@ -1,4 +1,8 @@
+from sqlite3 import IntegrityError
+
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -10,6 +14,8 @@ from RITCSE_codeWars import CodeChef
 from RITCSE_codeWars.models import Submission, Contest, Question
 from .form import UserForm, UploadFileForm
 
+c = CodeChef.API('buildrit', 'CSEdepartment')
+c.login()
 
 def index(request):
     now = timezone.now()
@@ -18,6 +24,10 @@ def index(request):
     for contest in contest_list:
         if contest.contest_start_date < now < contest.contest_end_date:
             contests.append(contest)
+    if not request.user.is_authenticated():
+        return render(request, 'RITCSE_codeWars/ContestList_not_auth.html', {
+            "contest_list": contests
+        })
 
     return render(request, 'RITCSE_codeWars/ContestList.html', {
         "contest_list": contests,
@@ -26,12 +36,8 @@ def index(request):
     })
 
 
-def all_submission(request):
-    try:
-        contest_pk = request.GET['contest']
-    except KeyError:
-        return HttpResponseRedirect(reverse('Index'))
-    contest = Contest.objects.all().filter(pk=contest_pk)[0]
+def all_submission(request, contest_id=1):
+    contest = Contest.objects.all().filter(pk=contest_id)[0]
     request.session['contest'] = contest
     request.session['contest'] = contest
     submission_list = Submission.objects.all().filter(contest=contest)
@@ -95,6 +101,8 @@ def your_submissions(request):
         return render(request, 'RITCSE_codeWars/YourSubmissions.html', {
             "submission_list": submision_list
         })
+    else:
+        return HttpResponseRedirect(reverse('Login') + "?error=true")
 
 
 def your_code(request):
@@ -115,23 +123,19 @@ def your_code(request):
     })
 
 
-class UserFormView(View):
-    form_class = UserForm
-    template_name = 'RITCSE_codeWars/registration.html'
 
-    def get(self, request):
-        form = self.form_class(None)
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            form.save(commit=True)
-        return HttpResponseRedirect(reverse('Index'))
 
 
 def login_user(request):
-    return render(request, 'RITCSE_codeWars/Login.html')
+    try:
+        error = request.GET['error']
+        if error == 'incorrect':
+            context = {'error_message': "Username and password does not match" }
+        else:
+            context = {'error_message': "Login required"}
+    except KeyError:
+        context = {}
+    return render(request, 'RITCSE_codeWars/Login.html', context)
 
 
 def logout_user(request):
@@ -147,7 +151,7 @@ def authenticate_user(request):
         return HttpResponseRedirect(reverse('Login'))
     user = authenticate(username=username, password=password)
     if user is None:
-        return HttpResponseRedirect(reverse('Login') + '?error=true')
+        return HttpResponseRedirect(reverse('Login') + '?error=incorrect')
     login(request, user)
     return HttpResponseRedirect(reverse('Index'))
 
@@ -190,8 +194,6 @@ def verify_submission(request, question_code):
         print source.name
     except KeyError:
         return HttpResponseRedirect(reverse('Problem', kwargs={'question_code': question_code}) + "?error=true")
-    c = CodeChef.API('buildrit', 'CSEdepartment')
-    c.login()
     submission = Submission(user=request.user)
     q_obj = Question.objects.get(question_code=question_code)
     submission.contest = q_obj.contest
@@ -202,5 +204,40 @@ def verify_submission(request, question_code):
     submission.submission_id = c.submit(question_code, submission.source, language)
     submission.result = c.check_result(submission.submission_id, question_code)
     submission.save()
-    c.logout()
     return HttpResponseRedirect(reverse('YourSubmissions'))
+
+
+def create_user(request):
+    user = User()
+    try:
+        user.first_name = request.POST['firstname']
+        user.username = request.POST['username']
+        password = request.POST['password']
+        re_password = request.POST['conformpassword']
+        if password != re_password:
+            return HttpResponseRedirect(reverse('Registration'))
+        user.email = request.POST['email']
+        user.set_password(password)
+    except KeyError:
+        return HttpResponseRedirect(reverse('Registration'))
+    try:
+        user.last_name = request.POST['lastname']
+    except KeyError:
+        user.last_name = ""
+    try:
+        user.save()
+    except IntegrityError:
+        return HttpResponseRedirect(reverse('Registration') + "?error=user")
+    return HttpResponseRedirect(reverse('Login'))
+
+
+def register_user(request):
+    try:
+        error = request.GET['error']
+        if error == 'user':
+            context = {'error_message': 'Username already exists'}
+        else : #error == 'pass':
+            context = {'error_message': "Password doesn't match"}
+    except KeyError:
+        context = {}
+    return render(request, 'RITCSE_codeWars/registration.html', context)

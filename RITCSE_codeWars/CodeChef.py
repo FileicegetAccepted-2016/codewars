@@ -158,6 +158,6 @@ class API:
         while response_html[0] != "'":
             ans += response_html[0]
             response_html = response_html[1:]
-        if ans.find('running') != -1:
+        if ans.find('running') != -1 or ans.find('compiling') != -1:
             return self.check_result(submission_id, question_code)
         return ans + '\0'
