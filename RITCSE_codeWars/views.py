@@ -12,7 +12,7 @@ from .form import UserForm
 
 def index(request):
     now = datetime.now()
-    contest_list = Contest.objects.all().filter(contest_start_date__lte=now, contest_end_date__gte=now)
+    contest_list = Contest.objects.all()
     return render(request, 'RITCSE_codeWars/Home.html', {
         "contest_list": contest_list
     })
@@ -92,7 +92,7 @@ def your_code(request):
     try:
         id = request.GET['submission_id']
     except KeyError:
-        return HttpResponseRedirect(reverse('YouSubmsiion'))
+        return HttpResponseRedirect(reverse('YourSubmissions'))
     user = request.user
     submission = Submission.objects.all().filter(submission_id=id)
 
