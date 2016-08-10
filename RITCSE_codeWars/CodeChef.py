@@ -95,7 +95,7 @@ class API:
             raise InternetConnectionFailedException
         forms_list = [i for i in self._br.forms()]
         if len(forms_list) > 0:
-            return False
+            raise RequiresLoginException
         # TODO handle multiple login
         self.__is_logged_in = True
         return True

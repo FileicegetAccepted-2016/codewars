@@ -17,7 +17,7 @@
                             {{ question.question_text }}
 
                     </div>
-                    <form action="{% url 'VerifyResult' %}" method="post" enctype="multipart/form-data">
+                    <form action="{% url 'VerifyResult' question_code=question.question_code %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                     <div >
                         <input type="file" name="source">
@@ -27,7 +27,8 @@
                           <option value="cpp">C++</option>
                           <option value="c">C</option>
                           <option value="java">Java</option>
-                          <option value="python2">Python</option>
+                          <option value="python2">Python 2.7</option>
+                          <option value="python3">Python 3</option>
 
                         </select>
                         <input type="text" id="code"  name="code" value="{{ question.question_code }}"/>
