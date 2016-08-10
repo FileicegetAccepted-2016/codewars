@@ -9,25 +9,27 @@
             <div class="col-md-4 ">
                 <div class="panel panel-info">
                     <div class="panel-heading ">
-                            <label class="panel-title " style="font-family: cursive; text-align:center ">
+                        <div align="center">
+                            <label class="panel-title "  style="font-family: cursive; text-align:center ">
                                 Login</label>
+                        </div>
                     </div>
                     <div class="panel body col-sm-12  ">
-                            <form  action="{% url 'AuthenticateUser' %}" method="post" name = "userform">
+                            <form  action="{% url 'Index' %}" method="post" name = "userform">
                                 {% csrf_token %}
                                      <label class="input-group">
                                         <span class="input-group-addons">Username</span>
-                                         <input type="text" class="from-control"  id="username" name="username" aria-label="Enter your username">
+                                         <input type="text" class="from-control"  required="required" aria-label="Enter your username">
                                      </label>
                                         <label class="input-group">
                                         <span class="input-group-addons">Password</span>
-                                         <input type="password" class="from-control" id="password" name="password" aria-label="Enter your password">
+                                         <input type="password" class="from-control"  required="required" aria-label="Enter your password">
                                      </label>
                                     <div class="form-group">
-                                        <div class="col-lg-offset-1  col-lg-10  ">
+                                        <div class="col-lg-offset-1  col-lg-15  ">
                                             <br>
-                                            <button type="submit" name="submit" class="btn btn-success">Submit</button>
-                                        </div>
+                                             <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                                                                    </div>
                                 </div>
                             </form>
 
