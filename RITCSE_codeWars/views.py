@@ -17,6 +17,7 @@ from .form import UserForm, UploadFileForm
 c = CodeChef.API('buildrit', 'CSEdepartment')
 c.login()
 
+
 def index(request):
     now = timezone.now()
     contest_list = Contest.objects.all()
@@ -33,64 +34,6 @@ def index(request):
         "contest_list": contests,
         "user": request.user.is_authenticated()
 
-    })
-
-
-def all_submission(request, contest_id=1):
-    contest = Contest.objects.all().filter(pk=contest_id)[0]
-    request.session['contest'] = contest
-    request.session['contest'] = contest
-    submission_list = Submission.objects.all().filter(contest=contest)
-    users = set()
-    for submission in submission_list:
-        if submission.user not in users:
-            users.add(submission.user)
-    user_submission_details = {}
-    max_count = 0
-    for user in users:
-        user_submission_list = Submission.objects.all().filter(user=user)
-        user_count = len(user_submission_list)
-        user_submission_details[user] = user_count
-        if user_count > max_count:
-            max_count = user_count
-    rank_list = []
-    for i in range(max_count)[::-1]:
-        same_rank = []
-        for user in users:
-            if user_submission_details[user] == i:
-                same_rank.append(user)
-        if len(same_rank) > 0: rank_list.append(same_rank)
-
-    def date_last(var):
-        return Submission.objects.all().filter(user=var).order_by('-submission_time')[0]
-
-    final_list = []
-    for l in rank_list:
-        if len(l) > 1:
-            for i, user_in_list in enumerate(l):
-                larg = user_in_list
-                j = 0
-                while len(l) - i > j > 0:
-                    if date_last(larg) < date_last(l[j]):
-                        larg = l[j]
-                t = larg
-                larg = l[j]
-                l[j] = t
-            final_list += l
-
-    class rankHolder:
-        def __init__(self, username, question_solved, last_submitted):
-            self.username = username
-            self.question_solved = question_solved
-            self.last_submitted = last_submitted
-
-    final_rank_list = []
-    for item in final_list:
-        final_rank_list.append(rankHolder(item.username, user_submission_details[item], date_last(item)))
-
-    return render(request, 'RITCSE_codeWars/AllSubmissions.html', {
-        "submission_list": submission_list,
-        "rank_list": final_rank_list
     })
 
 
@@ -123,14 +66,11 @@ def your_code(request):
     })
 
 
-
-
-
 def login_user(request):
     try:
         error = request.GET['error']
         if error == 'incorrect':
-            context = {'error_message': "Username and password does not match" }
+            context = {'error_message': "Username and password does not match"}
         else:
             context = {'error_message': "Login required"}
     except KeyError:
@@ -179,9 +119,14 @@ def problem(request, question_code):
         question = Question.objects.all().filter(question_code=question_code)[0]
     except Question.DoesNotExist:
         return HttpResponseRedirect('Index')
+
+    submission_list = Submission.objects.all().filter(question_code=question_code)
+    submission_accepted = submission_list.filter(complete_pass=True)
     return render(request, 'RITCSE_codeWars/Home.html', {
         'username': request.user.username,
-        'question': question
+        'question': question,
+        'submission_list': submission_list,
+        'submission_accepted': submission_accepted
     })
 
 
@@ -203,6 +148,10 @@ def verify_submission(request, question_code):
     submission.language = language
     submission.submission_id = c.submit(question_code, submission.source, language)
     submission.result = c.check_result(submission.submission_id, question_code)
+    if submission.result.find('Accepted') != -1:
+        submission.complete_pass = True
+    else:
+        submission.complete_pass = False
     submission.save()
     return HttpResponseRedirect(reverse('YourSubmissions'))
 
@@ -236,7 +185,7 @@ def register_user(request):
         error = request.GET['error']
         if error == 'user':
             context = {'error_message': 'Username already exists'}
-        else : #error == 'pass':
+        else:  # error == 'pass':
             context = {'error_message': "Password doesn't match"}
     except KeyError:
         context = {}

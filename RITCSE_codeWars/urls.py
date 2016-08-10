@@ -5,7 +5,6 @@ urlpatterns = [
     url(r'^$', views.index, name="Index"),
     url(r'^questions/(?P<contest_list_id>[0-9]+)/$', views.questions_list, name="Questions"),
     url(r'^questions/solve/(?P<question_code>.+)/$', views.problem, name="Problem"),
-    url(r'^allsubmissions/(?P<contest_id>[0-9]*)/$', views.all_submission, name="AllSubmissions"),
     url(r'^yoursubmission', views.your_submissions, name="YourSubmissions"),
     url(r'^code', views.your_code, name="YourCode"),
     url(r'^registration', views.register_user, name="Registration"),
