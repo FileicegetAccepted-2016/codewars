@@ -4,36 +4,75 @@
 
 
 {% block code %}
-  <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12 col-md-7">
-                <div class="panel  ">
-                    <div class="panel body">
-                        <div class="panel-heading panel panel-primary">
-                            <h3 class="panel-title">Create new account</h3>
+ <div class="container-fluid">
+            <div class="col-md-4"></div>
+
+
+            <div class="col-md-4 ">
+                <div class="panel panel-info">
+                    <div class="panel-heading ">
+                           <div align="center"
+                            <label class="panel-title " style="font-family: cursive; text-align:center ">
+                                Register</label>
                         </div>
-
-                            <form class="form-horizontal" role="form" action="{% url 'Registration' %}" method="post" name = "userform" >
-                            {% csrf_token %}
-
-                                Username : <input type="text" name="username"  aria-selected="true"/><br><br>
-                                Password  : <input type="password" name="password", /><br>
-                                First Name :<input type="text" name="firstname"  aria-selected="true"/><br>
-                                Last Name : <input type="text" name="lastname"  aria-selected="true"/><br>
-                                Email : <input type="email" name="email"  aria-selected="true"/><br>
-                                <div class="form-group">
-                                    <div class="col-lg-offset-2  col-lg-10  ">
-                                        <br>
-                                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                    <div class="panel body col-sm-12  "><br><br>
+                            <form  action="{% url 'Index' %}" method="post" name = "userform">
+                                {% csrf_token %}
+                                <div align="center">
+                                     <label class="input-group">
+                                         <input type="text" class="from-control" id="firstname" required="required" placeholder="First Name"
+                                                aria-label="Enter your Firstname">
+                                     </label>
                                     </div>
+                                <div align="center">
+                                        <label class="input-group">
+                                         <input type="password" class="from-control" id="lastname"  required="required" placeholder="Last Name"
+                                                aria-label="Enter your Lastname">
+                                     </label>
+                                    </div>
+                                <div align="center">
+                                     <label class="input-group">
+                                         <input type="text" class="from-control" id="username" required="required" placeholder="Username"
+                                                 aria-label="Enter your username">
+                                     </label>
+                                    </div>
+                                <div align="center">
+                                    <label class="input-group">
+
+                                         <input type="password" class="from-control" id="password" required="required" placeholder="Password"
+                                                aria-label="Enter your password">
+                                     </label>
+                                    </div>
+                                <div align="center">
+                                    <label class="input-group">
+
+                                         <input type="password" class="from-control" id="confrompassword" required="required" placeholder="Conform Password"
+                                                aria-label="conform password">
+                                     </label>
+                                    </div>
+
+                                <div align="center">
+                                    <label class="input-group">
+
+                                         <input type="email" class="from-control" id="email" required="required" placeholder="Email"
+                                                aria-label="Enter your email">
+                                     </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-1  col-lg-15  ">
+                                            <br>
+                                             <button type="submit" id="submit" class="btn btn-primary btn-block">Submit</button>
+                                                                                    </div>
                                 </div>
                             </form>
+
                     </div>
                 </div>
             </div>
-        </div>
-  </div>
+             <div class="col-md-4"></div>
 
+  </div>
 
 {% endblock %}
 
