@@ -44,26 +44,38 @@ def all_submission(request):
         for user in users:
             if user_submission_details[user] == i:
                 same_rank.append(user)
-        if len(same_rank) > 0 : rank_list.append(same_rank)
+        if len(same_rank) > 0: rank_list.append(same_rank)
 
     def date_last(var):
         return Submission.objects.all().filter(user=var).order_by('-submission_time')[0]
-    
+
     final_list = []
-    for l in rank_list :
-        if len(l)>1:
+    for l in rank_list:
+        if len(l) > 1:
             for i, user_in_list in enumerate(l):
                 larg = user_in_list
                 j = 0
-                while len(l)-i > j > 0:
+                while len(l) - i > j > 0:
                     if date_last(larg) < date_last(l[j]):
                         larg = l[j]
                 t = larg
                 larg = l[j]
                 l[j] = t
             final_list += l
+
+    class rankHolder:
+        def __init__(self, username, question_solved, last_submitted):
+            self.username = username
+            self.question_solved = question_solved
+            self.last_submitted = last_submitted
+
+    final_rank_list = []
+    for item in final_list:
+        final_rank_list.append(rankHolder(item.username, user_submission_details[item], date_last(item)))
+
     return render(request, 'RITCSE_codeWars/AllSubmissions.html', {
-        "submission_list": submission_list
+        "submission_list": submission_list,
+        "rank_list": final_rank_list
     })
 
 
