@@ -18,18 +18,18 @@ def index(request):
     for contest in contest_list:
         if contest.contest_start_date < now < contest.contest_end_date:
             contests.append(contest)
+    if not request.user.is_authenticated():
+        return render(request, 'RITCSE_codeWars/ContestList_not_auth.html', {
+            "contest_list": contests
+        })
 
     return render(request, 'RITCSE_codeWars/ContestList.html', {
         "contest_list": contests
     })
 
 
-def all_submission(request):
-    try:
-        contest_pk = request.GET['contest']
-    except KeyError:
-        return HttpResponseRedirect(reverse('Index'))
-    contest = Contest.objects.all().filter(pk=contest_pk)[0]
+def all_submission(request, contest_id=1):
+    contest = Contest.objects.all().filter(pk=contest_id)[0]
     request.session['contest'] = contest
     request.session['contest'] = contest
     submission_list = Submission.objects.all().filter(contest=contest)
@@ -93,6 +93,8 @@ def your_submissions(request):
         return render(request, 'RITCSE_codeWars/YourSubmissions.html', {
             "submission_list": submision_list
         })
+    else:
+        return HttpResponseRedirect(reverse('Login'))
 
 
 def your_code(request):
@@ -129,7 +131,15 @@ class UserFormView(View):
 
 
 def login_user(request):
-    return render(request, 'RITCSE_codeWars/Login.html')
+    try:
+        error = request.GET['error']
+        if error == 'incorrect':
+            context = {'error_message': "Username and password does not match" }
+        else:
+            context = {'error_message': "Login required"}
+    except KeyError:
+        context = {}
+    return render(request, 'RITCSE_codeWars/Login.html', context)
 
 
 def logout_user(request):
