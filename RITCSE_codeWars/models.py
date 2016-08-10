@@ -16,6 +16,7 @@ class Question(models.Model):
     contest = models.ForeignKey(Contest)
     question_code = models.CharField(max_length=100)
     question_name = models.CharField(max_length=250)
+    question_text = models.TextField()
 
     def __str__(self):
         return self.user + ' - ' + self.question_code
