@@ -27,6 +27,7 @@ class Submission(models.Model):
     user = models.ForeignKey(User)
     question_code = models.CharField(max_length=20)
     submission_id = models.BigIntegerField()
+    language = models.CharField(max_length=50)
     source = models.TextField()
     result = models.CharField(max_length=20)
     complete_pass = models.BooleanField(default=False)

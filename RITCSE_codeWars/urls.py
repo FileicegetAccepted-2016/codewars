@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^registration', views.UserFormView.as_view(), name="Registration"),
     url(r'^login/$', views.login_user, name="Login"),
     url(r'authenticate/$', views.authenticate_user, name="AuthenticateUser"),
-    url(r'logout', views.logout_user, name="Logout")
+    url(r'logout', views.logout_user, name="Logout"),
+    url(r'questions/solve/(?P<question_code>.+)/verify', views.verify_submission, name="VerifyResult")
 ]
