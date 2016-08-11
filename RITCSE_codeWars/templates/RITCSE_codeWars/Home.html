@@ -6,19 +6,20 @@
  <link rel="stylesheet" type="text/css" href="{% static 'RITCSE_codeWars/table_styling.css' %}"/>
 <body>
 {% block code %}
+    <div>
     <div class="col-sm-6">
 
        <div class="container-fluid">
 
-                <div class="col-sm-12 ">
+                <div>
                     <div class="panel panel-primary">
                         <div class="panel-heading ">
-                                <h3 class="panel-title"><c style="font-family: cursive">
-                                    {{ question.question_name }}</c></h3>
+                                <h3 class="panel-title" style="font-family: cursive">
+                                    {{ question.question_name }}</h3>
                         </div>
                         <div class="panel body col-sm-12 " style="min-height: 100px; min-width: 500px">
                                 {{ question.question_text|linebreaks }}
-
+                            
                         </div>
                         <form action="{% url 'VerifyResult' question_code=question.question_code %}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
@@ -58,43 +59,45 @@
     </div>
 
 
-    <div class="col-sm-1"></div>
 
-    <div class="col-sm-4">
-        <div class="panel-group">
+    <div class="col-sm-6">
             <div class="panel panel-sucess">
                 <div class="panel-heading">
                 </div>
                 <div class="panel-body">
-                    <div class="container">
+                    <div class="container col-sm-12">
                       <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#AllSubmission">All Submissions</a></li>
                         <li><a data-toggle="tab" href="#Sucessful">Sucessful Submissions</a></li>
                       </ul>
-                    <div class="tab-content">
+                    <div class="tab-content col-sm-12">
                         <div id="AllSubmission" class="tab-pane fade in active ">
-                            <table style="width:700px" class="table table-hover">
+                            <table  class="table table-hover " >
                                 <tr>
-                                    <th>User</th>
+                                    <th width="150">User</th>
+                                    <th width="150" >Language</th>
                                     <th>Status</th>
                                 </tr>
                                 {% for data in submission_list %}
                                     <tr>
                                         <td>{{ data.user.username }}</td>
+                                        <td>{{ data.language }}</td>
                                         <td>{{ data.result }}</td>
                                     </tr>
                                 {% endfor %}
                             </table>
                         </div>
                         <div id="Sucessful" class="tab-pane fade ">
-                            <table style="width:700px" class="table table-hover">
+                            <table  class="table table-hover">
                                 <tr>
-                                    <th>User</th>
+                                    <th width="150">User</th>
+                                    <th width="150">Language</th>
                                     <th>Time</th>
                                 </tr>
                                 {% for data in submission_accepted %}
                                     <tr>
                                         <td>{{ data.user.username }}</td>
+                                        <td>{{ data.language }}</td>
                                         <td>{{ data.submission_time }}</td>
                                     </tr>
                                 {% endfor %}
@@ -104,8 +107,8 @@
 
                 </div>
             </div>
-        </div>
 
+    </div>
     </div>
     </div>
     </div>
@@ -113,7 +116,7 @@
 {% endblock %}
 
 <footer>
-    <div align="center" style="position:fixed;   bottom:0px;   height:30px;   width:100%;">
+    <div align="center" style="position:fixed;   bottom:0px;   height:30px;   ">
   <i >Created by Bineeth and Sidhin.S.Thomas</i>
         </div>
 </footer>
