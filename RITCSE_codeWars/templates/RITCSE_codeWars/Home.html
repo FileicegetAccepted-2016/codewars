@@ -18,7 +18,7 @@
                                     {{ question.question_name }}</h3>
                         </div>
                         <div class="panel body " style="min-height: 100px; min-width: 500px">
-                                {{ question.question_text }}
+                                {{ question.question_text|linebreaks }}
 
                         </div>
                         <form action="{% url 'VerifyResult' question_code=question.question_code %}" method="post" enctype="multipart/form-data">
@@ -114,12 +114,6 @@
     </div>
 
 {% endblock %}
-
-<footer>
-    <div align="center" style="position:fixed;   bottom:0px;   height:30px;   ">
-  <i >Created by Bineeth and Sidhin.S.Thomas</i>
-        </div>
-</footer>
 
 {% block logout %}
     <li class="{% block Logout %}{% endblock %}">
