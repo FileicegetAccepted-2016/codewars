@@ -120,8 +120,8 @@ def problem(request, question_code):
     except Question.DoesNotExist:
         return HttpResponseRedirect('Index')
 
-    submission_list = Submission.objects.all().filter(question_code=question_code)
-    submission_accepted = submission_list.filter(complete_pass=True)
+    submission_list = Submission.objects.all().filter(question_code=question_code).order_by('-submission_time')
+    submission_accepted = submission_list.filter(complete_pass=True).order_by('-submission_time')
     print submission_accepted
     return render(request, 'RITCSE_codeWars/Home.html', {
         'username': request.user.username,
@@ -136,6 +136,8 @@ def verify_submission(request, question_code):
         return HttpResponseRedirect(reverse('Login') + "?error=true")
     try:
         language = request.POST['Language']
+        if str(language) == 'none':
+            return HttpResponseRedirect(reverse('Problem', kwargs={'question_code': question_code}) + "?error=true")
         source = request.FILES['source']
         print source.name
     except KeyError:
@@ -176,7 +178,7 @@ def create_user(request):
         user.last_name = ""
     try:
         user.save()
-    except IntegrityError:
+    except Exception:
         return HttpResponseRedirect(reverse('Registration') + "?error=user")
     return HttpResponseRedirect(reverse('Login'))
 
