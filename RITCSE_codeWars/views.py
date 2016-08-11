@@ -183,23 +183,24 @@ def problem(request, question_code):
 
 
 def verify_submission(request, question_code):
-
+    print request.POST
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('Login') + "?error=true")
+    print request.POST
     try:
-        print request.POST
         language = request.POST['Language']
         source = request.FILES['source']
         print source.name
     except KeyError:
         return HttpResponseRedirect(reverse('Problem', kwargs={'question_code': question_code}) + "?error=true")
     submission = Submission(user=request.user)
-    submission.contest = Contest(request.session['contest'])
+    q_obj = Question.objects.get(question_code=question_code)
+    submission.contest = q_obj.contest
     submission.question_code = question_code
-    submission.source = source
+    submission.source = source.read()
     submission.submission_time = timezone.now()
     submission.language = language
-    submission.submission_id = c.submit(question_code, source, language)
-    submission.result = c.check_result(submission.submission_id,question_code)
+    submission.submission_id = c.submit(question_code, submission.source, language)
+    submission.result = c.check_result(submission.submission_id, question_code)
     submission.save()
     return HttpResponseRedirect(reverse('YourSubmissions'))
