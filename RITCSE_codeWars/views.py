@@ -10,9 +10,6 @@ from RITCSE_codeWars import CodeChef
 from RITCSE_codeWars.models import Submission, Contest, Question
 from .form import UserForm, UploadFileForm
 
-c = CodeChef.API('buildrit', 'CSEdepartment')
-c.login()
-
 
 def index(request):
     now = timezone.now()
@@ -183,16 +180,16 @@ def problem(request, question_code):
 
 
 def verify_submission(request, question_code):
-    print request.POST
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('Login') + "?error=true")
-    print request.POST
     try:
         language = request.POST['Language']
         source = request.FILES['source']
         print source.name
     except KeyError:
         return HttpResponseRedirect(reverse('Problem', kwargs={'question_code': question_code}) + "?error=true")
+    c = CodeChef.API('buildrit', 'CSEdepartment')
+    c.login()
     submission = Submission(user=request.user)
     q_obj = Question.objects.get(question_code=question_code)
     submission.contest = q_obj.contest
@@ -203,4 +200,5 @@ def verify_submission(request, question_code):
     submission.submission_id = c.submit(question_code, submission.source, language)
     submission.result = c.check_result(submission.submission_id, question_code)
     submission.save()
+    c.logout()
     return HttpResponseRedirect(reverse('YourSubmissions'))
