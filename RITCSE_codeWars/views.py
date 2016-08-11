@@ -15,7 +15,7 @@ from RITCSE_codeWars.models import Submission, Contest, Question
 from .form import UserForm, UploadFileForm
 
 c = CodeChef.API('buildrit', 'CSEdepartment')
-#c.login()
+c.login()
 
 
 def index(request):
@@ -142,9 +142,12 @@ def verify_submission(request, question_code):
         print source.name
     except KeyError:
         return HttpResponseRedirect(reverse('Problem', kwargs={'question_code': question_code}) + "?error=true")
+
     submission = Submission(user=request.user)
     q_obj = Question.objects.get(question_code=question_code)
     submission.contest = q_obj.contest
+    if q_obj.contest.contest_end_date < timezone.now():
+        return HttpResponseRedirect(reverse('Index') + "?error=timeover")
     submission.question_code = question_code
     submission.source = source.read()
     submission.submission_time = timezone.now()

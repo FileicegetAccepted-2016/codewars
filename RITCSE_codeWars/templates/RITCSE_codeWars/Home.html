@@ -19,7 +19,7 @@
                         </div>
                         <div class="panel body col-sm-12 " style="min-height: 100px; min-width: 500px">
                                 {{ question.question_text|linebreaks }}
-                            
+
                         </div>
                         <form action="{% url 'VerifyResult' question_code=question.question_code %}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
