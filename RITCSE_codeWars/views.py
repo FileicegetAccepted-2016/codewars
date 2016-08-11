@@ -15,7 +15,7 @@ from RITCSE_codeWars.models import Submission, Contest, Question
 from .form import UserForm, UploadFileForm
 
 c = CodeChef.API('buildrit', 'CSEdepartment')
-c.login()
+#c.login()
 
 
 def index(request):
@@ -32,7 +32,8 @@ def index(request):
 
     return render(request, 'RITCSE_codeWars/ContestList.html', {
         "contest_list": contests,
-        "user": request.user.is_authenticated()
+        "user": request.user.is_authenticated(),
+        'username': request.user.username
 
     })
 
@@ -42,7 +43,8 @@ def your_submissions(request):
         user = request.user
         submision_list = Submission.objects.all().filter(user=user)
         return render(request, 'RITCSE_codeWars/YourSubmissions.html', {
-            "submission_list": submision_list
+            "submission_list": submision_list,
+            'username': request.user.username
         })
     else:
         return HttpResponseRedirect(reverse('Login') + "?error=true")
