@@ -4,45 +4,97 @@
 {% block Home %}active{% endblock %}
 
 {% block code %}
+    <div class="col-sm-6">
 
-   <div class="container-fluid">
+       <div class="container-fluid">
 
-            <div class="col-sm-12 col-md-7">
-                <div class="panel panel-primary">
-                    <div class="panel-heading ">
-                            <h3 class="panel-title"><c style="font-family: cursive">
-                                {{ question.question_name }}</c></h3>
+                <div class="col-sm-12 col-md-7">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading ">
+                                <h3 class="panel-title"><c style="font-family: cursive">
+                                    {{ question.question_name }}</c></h3>
+                        </div>
+                        <div class="panel body col-sm-12 " style="min-height: 100px">
+                                {{ question.question_text }}
+
+                        </div>
+                        <form action="{% url 'VerifyResult' question_code=question.question_code %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                        <div >
+                            <input type="file" name="source">
+
+                            <select name="Language" value="Language">
+                              <option value="none" selected = "selected">Select language</option>
+                              <option value="cpp">C++</option>
+                              <option value="c">C</option>
+                              <option value="java">Java</option>
+                              <option value="python2">Python 2.7</option>
+                              <option value="python3">Python 3</option>
+
+                            </select>
+                        </div>
+
+                        <div >
+                            <br>
+                            <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                         </div>
+                            </form>
                     </div>
-                    <div class="panel body col-sm-12 ">
-                            {{ question.question_text }}
+                </div>
 
-                    </div>
-                    <form action="{% url 'VerifyResult' question_code=question.question_code %}" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                    <div >
-                        <input type="file" name="source">
+      </div>
+    </div>
 
-                        <select name="Language" value="Language">
-                          <option value="none" selected = "selected">Select language</option>
-                          <option value="cpp">C++</option>
-                          <option value="c">C</option>
-                          <option value="java">Java</option>
-                          <option value="python2">Python 2.7</option>
-                          <option value="python3">Python 3</option>
+    <div class="col-sm-1"></div>
 
-                        </select>
-                        <input type="text" id="code"  name="code" value="{{ question.question_code }}"/>
-                    </div>
+    <div class="col-sm-4">
+        <div class="panel-group">
+            <div class="panel panel-sucess">
+                <div class="panel-heading">
+                    Submissions
+                </div>
+                <div class="panel-body">
+                    <div class="container">
+                      <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#">All Submissions</a></li>
+                        <li><a data-toggle="tab" href="#S">Sucessful Submissions</a></li>
+                      </ul>
+                    <div class="tab-content">
+                        <div id="AllSubmission" class="tab-pane fade ">
+                            <table >
+                                <tr>
+                                    <th>User</th>
+                                    <th>Status</th>
+                                </tr>
+                                {% for data in submission_list %}
+                                    <tr>
+                                        <td>{{ data.username }}</td>
+                                        <td>{{ data.result }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                        <div id="Sucessful" class="tab-pane fade in active">
+                            <table >
+                                <tr>
+                                    <th>User</th>
+                                    <th>Time</th>
+                                </tr>
+                                {% for data in submission_accepted %}
+                                    <tr>
+                                        <td>{{ data.username }}</td>
+                                        <td>{{ data.submission_time }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
 
-                    <div >
-                        <br>
-                        <button type="submit" name="submit" class="btn btn-success">Submit</button>
-                     </div>
-                        </form>
+
                 </div>
             </div>
+        </div>
 
-  </div>
+    </div>
 
 {% endblock %}
 
