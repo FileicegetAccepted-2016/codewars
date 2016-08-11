@@ -17,6 +17,7 @@
                                 <h3 class="panel-title" style="font-family: cursive">
                                     {{ question.question_name }}</h3>
                         </div>
+
                         <div class="panel body col-sm-12 " style="min-height: 100px; min-width: 500px">
                                 {{ question.question_text|linebreaks }}
                             
@@ -114,12 +115,6 @@
     </div>
 
 {% endblock %}
-
-<footer>
-    <div align="center" style="position:fixed;   bottom:0px;   height:30px;   ">
-  <i >Created by Bineeth and Sidhin.S.Thomas</i>
-        </div>
-</footer>
 
 {% block logout %}
     <li class="{% block Logout %}{% endblock %}">
