@@ -15,7 +15,7 @@ from RITCSE_codeWars.models import Submission, Contest, Question
 from .form import UserForm, UploadFileForm
 
 c = CodeChef.API('buildrit', 'CSEdepartment')
-c.login()
+#c.login()
 
 
 def index(request):
