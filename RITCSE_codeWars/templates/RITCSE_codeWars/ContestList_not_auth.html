@@ -40,16 +40,19 @@
                     <a href={% url "YourSubmissions" %}>Your Submissions</a>
                 </li>
 
-                <li class="{% block AllSubmissions %}{% endblock %}">
-                    <a href={% url "AllSubmissions" %}>All Submissions</a>
-                </li>
+
             </ul>
 
              <ul class="nav navbar-nav navbar-right">
 
-                 <li class="{% block Logout %}{% endblock %}">
-                    <a href={% url "Logout" %}>
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
+                  <li class="{% block Registration %}{% endblock %}">
+                    <a href={% url "Registration" %}>
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; Register
+                    </a>
+                </li>
+                <li class="{% block Login %}{% endblock %}">
+                    <a href="{% url "Login" %}">
+                         <span class="glyphicon glyphicon-log-in" aria-hidden="True" ></span>&nbsp; Login
                     </a>
                 </li>
 
