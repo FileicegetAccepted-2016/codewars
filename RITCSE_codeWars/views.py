@@ -122,6 +122,7 @@ def problem(request, question_code):
 
     submission_list = Submission.objects.all().filter(question_code=question_code)
     submission_accepted = submission_list.filter(complete_pass=True)
+    print submission_accepted
     return render(request, 'RITCSE_codeWars/Home.html', {
         'username': request.user.username,
         'question': question,
@@ -148,7 +149,7 @@ def verify_submission(request, question_code):
     submission.language = language
     submission.submission_id = c.submit(question_code, submission.source, language)
     submission.result = c.check_result(submission.submission_id, question_code)
-    if submission.result.find('Accepted') != -1:
+    if submission.result.find('accepted') != -1:
         submission.complete_pass = True
     else:
         submission.complete_pass = False

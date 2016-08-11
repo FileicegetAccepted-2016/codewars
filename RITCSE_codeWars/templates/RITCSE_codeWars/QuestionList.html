@@ -1,5 +1,12 @@
 {% extends 'RITCSE_codeWars/base.html' %}
-{% block title %}{{ contest.name }}{% endblock %}
+{% block title %}Codewars{% endblock %}
+{% block logout %}
+    <li class="{% block Logout %}{% endblock %}">
+                    <a href={% url "Logout" %}>
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
+                    </a>
+    </li>
+{% endblock %}
 
 
 {% block code %}

@@ -65,7 +65,8 @@
 {% block code %}
     <br><br><br>
     <div class="container-fluid">
-
+     <div class="col-sm-1"></div>
+    <div class="col-sm-8">
     <div class="panel panel-default">
         <div class="panel-heading">All Competitions available</div>
         <div class="panel-body">
@@ -75,6 +76,7 @@
                  {{ contestitems.name }}</a>
              {% endfor %}
          </div>
+        </div>
     </div>
         </div>
     </div>
@@ -82,6 +84,12 @@
 
 
 {% endblock %}
+
+<footer>
+    <div align="center" style="position:fixed;   bottom:0px;   height:30px;   width:100%;">
+  <i >Created by Bineeth and Sidhin.S.Thomas</i>
+        </div>
+</footer>
 
 </body>
 </html>
