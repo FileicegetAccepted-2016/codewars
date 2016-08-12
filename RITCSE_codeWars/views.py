@@ -15,7 +15,7 @@ from RITCSE_codeWars.models import Submission, Contest, Question
 from .form import UserForm, UploadFileForm
 
 c = CodeChef.API('buildrit', 'CSEdepartment')
-#c.login()
+c.login()
 
 
 def index(request):
@@ -171,7 +171,7 @@ def create_user(request):
         user.username = request.POST['username']
         password = request.POST['password']
         re_password = request.POST['conformpassword']
-        if password != re_password:
+        if password != re_password or user.username == "" or password == "" :
             return HttpResponseRedirect(reverse('Registration'))
         user.email = request.POST['email']
         user.set_password(password)
