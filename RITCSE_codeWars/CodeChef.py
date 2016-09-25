@@ -18,7 +18,6 @@ Possible future additions:
 * Searching for specific questions
 
 """
-
 import sys
 
 if sys.version_info[0] > 2:
@@ -34,18 +33,29 @@ except ImportError:
     raise Exception("This API requires module: BeautifulSoup(bs4)")
 
 
-class AlreadyLoggedInException(Exception): pass
-class RequiresLoginException(Exception): pass
-class IncorrectLanguageException(Exception): pass
-class InternetConnectionFailedException(Exception): pass
+class AlreadyLoggedInException(Exception):
+    pass
+
+
+class RequiresLoginException(Exception):
+    pass
+
+
+class IncorrectLanguageException(Exception):
+    pass
+
+
+class InternetConnectionFailedException(Exception):
+    pass
+
 
 # To add support of more languages, just edit this:
 language_list = {
-    'cpp': '44',
-    'c': '11',
-    'c#': '27',
-    'java': '10',
-    'php': '29',
+    'cpp'    : '44',
+    'c'      : '11',
+    'c#'     : '27',
+    'java'   : '10',
+    'php'    : '29',
     'python3': '116',
     'python2': '4'
 }

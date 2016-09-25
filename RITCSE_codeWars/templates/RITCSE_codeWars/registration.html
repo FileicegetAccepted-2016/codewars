@@ -17,6 +17,7 @@
                             </div>
                     </div>
                     <div class="panel body col-sm-12  "><br><br>
+                        {% if error_message %}{{ error_message }} {% endif %}
                             <form  action="{% url 'CreateUser' %}" method="post" name = "userform">
                                 {% csrf_token %}
                                     <div align="center">
